@@ -1,0 +1,121 @@
+﻿<!doctype html>
+<link rel=stylesheet href=style.css>
+<script src=helpers.js></script>
+<div id=viewport>
+  <div id=rainbow class=intro><div></div></div>
+  <div id=camera>
+    <div id=scene></div>
+  </div>
+  <div id=sun></div>
+  <div id=unicorn>🦄</div>
+  <div id=fire>🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥</div>
+  <canvas id=rain width=720 height=405></canvas>
+  <div id=fade></div>
+  <div id=text></div>
+</div>
+
+<script>
+onload = () => {
+  C.plane({n:"island",w:400,h:400,css:"circle island"});
+  C.plane({n:"c1",x:-50,w:200,h:200,z:40,rx:-90,sx:.3,sy:.3,css:"crayon",html:crayon("purple")});
+  C.plane({n:"c2",x:-30,w:200,h:200,z:40,rx:-90,sx:.3,sy:.3,css:"crayon",html:crayon("indigo")});
+  C.plane({n:"c3",x:-10,w:200,h:200,z:40,rx:-90,sx:.3,sy:.3,css:"crayon",html:crayon("#4fa7e5")});
+  C.plane({n:"c4",x:10,w:200,h:200,z:40,rx:-90,sx:.3,sy:.3,css:"crayon",html:crayon("#248620")});
+  C.plane({n:"c5",x:30,w:200,h:200,z:40,rx:-90,sx:.3,sy:.3,css:"crayon",html:crayon("yellow")});
+  C.plane({n:"c6",x:50,w:200,h:200,z:40,rx:-90,sx:.3,sy:.3,css:"crayon",html:crayon("orange")});
+  C.plane({n:"c7",x:70,w:200,h:200,z:40,rx:-90,sx:.3,sy:.3,css:"crayon",html:crayon("red")});
+  
+  C.camera({z:-300,y:-75,rx:80});
+  fade.style.transition = "background 2s";
+  setTimeout(()=>{
+    fade.style.background = "#fff1";
+  }, 100);
+  
+  setTimeout(()=>{
+    text.innerHTML = "Once upon a time, on Unicorny's enchanted island...<br>The rainbow was maintained by seven magic crayons...<br>But a storm arrived... and the crayons disappeared...";
+    text.style.top = "10px";
+    text.style.opacity = 1;
+    text.style.lineHeight = "35px";
+  }, 1000);
+  
+  setTimeout(()=>{
+    fade.style.background = "#0008";
+    //C.move({n:"c", z:40});
+    rainbow.style.opacity = 0;
+    sun.style.opacity = 0;
+    unicorn.style.top = "400px";
+  }, 10000);
+  
+  setTimeout(()=>{
+    fade.style.transition = "none";
+    fade.style.background = "#ffff";
+    py(thu);
+  }, 11500);
+  
+  setTimeout(()=>{
+    fade.style.background = "#0008";
+    C.move({n:"c1", x:-4000, y:-10000, rz:-200});
+    C.move({n:"c2", x:-4000, y:-20000, rz:-300});
+    C.move({n:"c3", x:-2000, y:-40000, rz:-300});
+    C.move({n:"c4", x:0, y:-40000, rz:-100});
+    C.move({n:"c5", x:1000, y:-40000, rz:100});
+    C.move({n:"c6", x:3000, y:-30000, rz:300});
+    C.move({n:"c7", x:4000, y:-20000, rz:500});
+  }, 11600);
+  
+  setTimeout(()=>{
+    
+    
+    // rain
+    rain.style.opacity = 1;
+    ctx = rain.getContext("2d");
+    setInterval((x,y,i)=>{
+      rain.width ^= 0;
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = "#346";
+      for(i = 100; i--;){
+        ctx.moveTo(x = Math.random()*720, y = Math.random()*405)
+        ctx.lineTo(x-5,y+20);
+      }
+      ctx.stroke();
+    },50);
+    
+    AA = new AudioContext();
+    bs = 4096;
+    wn = AA.createScriptProcessor(bs, 1, 1);
+    wn.onaudioprocess = (e,i,output) => {
+        output = e.outputBuffer.getChannelData(0);
+        for (i = 0; i < bs; i++) {
+            output[i] = (Math.random() * 2 - 1)/220;
+        }
+    }
+    wn.connect(AA.destination);
+    
+  }, 10300);
+  
+  setTimeout(()=>{
+    fade.style.transition = "background 1s";
+    text.innerHTML += "<br>And everything burned !"
+  }, 15000);
+  
+  setTimeout(()=>{
+    fire.style.top = "280px";
+  }, 15500);
+  
+  setTimeout(()=>{
+    island.style.filter = "brightness(.1)";
+  }, 16000);
+  
+  setTimeout(()=>{
+    text.style.opacity = 0;
+  }, 19000);
+  
+  setTimeout(()=>{
+    fade.style.background = "#000";
+  }, 21000);
+  
+  setTimeout(()=>{
+    location = "game.html";
+  }, 22000);
+}
+</script>
