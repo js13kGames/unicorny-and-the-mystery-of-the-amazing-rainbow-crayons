@@ -1,4 +1,8 @@
 ---
+genres:
+  - adventure
+  - puzzle
+  - casual
 directors_cut: https://xem.github.io/js13k26-rainbows
 post: https://xem.github.io/articles/js13k26.html
 # See github.com/js13kGames/hello-world for supported frontmatter
